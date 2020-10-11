@@ -186,7 +186,9 @@ class EpubParser : PublicationParser {
 
     private fun parseNavigationData(packageDocument: PackageDocument, container: Container): Map<String, List<Link>> =
         if (packageDocument.epubVersion < 3.0) {
-            val ncxItem = packageDocument.manifest.firstOrNull { MediaType.NCX.contains(it.mediaType) }
+            val ncxItem = packageDocument.manifest.firstOrNull {
+                MediaType.NCX.contains(it.mediaType) || MediaType.XHTML.contains(it.mediaType)
+            }
             ncxItem?.let {
                 val ncxPath = normalize(packageDocument.path, ncxItem.href)
                 parseXmlDocument(ncxPath, container)?.let { NcxParser.parse(it, ncxPath) }
