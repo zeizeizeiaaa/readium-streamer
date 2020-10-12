@@ -191,7 +191,9 @@ class EpubParser : PublicationParser {
             }
             ncxItem?.let {
                 val ncxPath = normalize(packageDocument.path, ncxItem.href)
-                parseXmlDocument(ncxPath, container)?.let { NcxParser.parse(it, ncxPath) }
+                parseXmlDocument(ncxPath, container)?.let {
+                    NcxParser.parse(it, ncxPath)
+                }
             }
         } else {
             val navItem = packageDocument.manifest.firstOrNull { it.properties.contains(Vocabularies.ITEM + "nav") }
